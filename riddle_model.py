@@ -15,11 +15,10 @@ def solve():
     first_word = "ENIGMA"
     second_word = "IGMAEN"
 
-    model.setObjective(b, GRB.MINIMIZE)
-
     # Constraint for the enigma-igmaen numbers
-    model.addConstr(quicksum(10**(len(first_word) - 1 - i) * y[first_word[i]] for i in range(len(first_word))) == b)
-    model.addConstr(quicksum(10 ** (len(second_word) - 1 - i) * y[second_word[i]] for i in range(len(second_word))) == b * 1.2)
+    model.addConstr(quicksum(10 ** (len(first_word) - 1 - i) * y[first_word[i]] for i in range(len(first_word))) == b)
+    model.addConstr(
+        quicksum(10 ** (len(second_word) - 1 - i) * y[second_word[i]] for i in range(len(second_word))) == b * 1.2)
 
     # Conflict constraint
     model.addConstrs(x[i_1, j] + x[i_2, j] <= 1 for i_1 in letters for i_2 in letters for j in digits if i_1 != i_2)
@@ -32,4 +31,3 @@ def solve():
 
     model.optimize()
     return model
-

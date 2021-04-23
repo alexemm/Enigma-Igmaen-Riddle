@@ -1,8 +1,9 @@
 
-from riddle_model import solve
+from riddle_binary_model import solve
 
 
 if __name__ == "__main__":
     m = solve()
     for v in m.getVars():
-        print('%s %g' % (v.varName, v.x))
+        if v.x == 1:
+            print('%s %g' % (v.varName, v.x))
