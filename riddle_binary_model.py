@@ -20,7 +20,7 @@ def solve():
             range(len(second_word))) == 0)
 
     # Conflict constraint, different letters have different digits
-    model.addConstrs(x[i_1, j] + x[i_2, j] <= 1 for i_1 in letters for i_2 in letters for j in digits if i_1 != i_2)
+    model.addConstrs(quicksum(x[i, j] for i in letters) <= 1 for j in digits)
 
     # Exactly one digit has to be used per letter
     model.addConstrs(quicksum(x[i, j] for j in digits) == 1 for i in letters)
